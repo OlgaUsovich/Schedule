@@ -4,7 +4,7 @@ import datetime
 from django.shortcuts import render
 
 # Create your views here.
-from .models import Schedule
+from .models import Schedule, EventTime
 
 
 def display_schedule(request):
@@ -20,5 +20,7 @@ def show_calendar(request):
 
 def week_schedule(request):
     schedule_lines = Schedule.objects.all()
-    days = range(1, 8)
+    times = EventTime.objects.filter(id__in=schedule_lines.values_list('event_time', flat=True))
+    time_dict = {str(time): {k: schedule_lines.filter(event_time=time, event_date__iso_week_day=k) for k in range(1, 8)}
+                 for time in times}
     return render(request, 'schedule/week_schedule.html', locals())

@@ -108,3 +108,6 @@ class Schedule(models.Model):
 
     def __str__(self):
         return f'{self.group}, {self.event}, {self.event_time}, {self.event_date}'
+
+    def short_name(self):
+        return f'{self.event}, {self.group}, {self.teacher}'
