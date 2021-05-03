@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Расписание на неделю{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered">
+        {#    <caption>#}
+        {#        Расписание на неделю {{ days.0|date:"d.m" }} - {{ days.-1|date:"d.m" }}#}
+        {#    </caption>#}
+        <thead>
+        <tr>
+            <th>Время занятий</th>
+            <th>Понедельник</th>
+            <th>Вторник</th>
+            <th>Среда</th>
+            <th>Четверг</th>
+            <th>Пятница</th>
+            <th>Суббота</th>
+            <th>Воскресенье</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for schedule_line in schedule_lines %}
+            <tr>
+            <td>{{ schedule_line.event_time }}</td>
+            {% for day in days %}
+                {% if day == schedule_line.event_date.isoweekday %}
+                    <td>{{ schedule_line.event }}</td>
+                {% else %}
+                    <td> -</td>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

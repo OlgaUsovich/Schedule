@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Календарь{% endblock %}
+
+{% block content %}
+<table class="table table-bordered">
+    <caption>
+        Календарь расписания
+    </caption>
+    <thead>
+    <tr>
+        <th># недели</th>
+        <th>Понедельник</th>
+        <th>Вторник</th>
+        <th>Среда</th>
+        <th>Четверг</th>
+        <th>Пятница</th>
+        <th>Суббота</th>
+        <th>Воскресенье</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for day in days %}
+        {% if forloop.counter|add:"-1"|divisibleby:'7' %}
+            <tr>
+                <td>{{ day.isocalendar.1 }}</td>
+        {% endif %}
+        <td>{{ day|date:"d.m" }}</td>
+        {% if forloop.counter|divisibleby:'7' %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

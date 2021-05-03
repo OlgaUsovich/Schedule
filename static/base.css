@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'Playlist-Script';
+    src: url('/static/Playlist-Script.ttf.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('/static/Gilroy-BlackItalic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.header {
+    height: 70px;
+    background-color: #f888bb;
+    display: flex;
+    padding: 15px 10px;
+}
+
+.logo {
+    margin-right: auto;
+    text-decoration: none;
+    font-family: "Playlist-Script";
+    font-size: 38px;
+    color: white;
+}
+
+.logo:hover{
+    text-decoration: none;
+    color: darkgray;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.change_font {
+    font-family: "Playlist-Script";
+}
+
+.back {
+    background-image: url(backgrounds/background80.png);
+}
+
+.detail_img {
+    width: 600px;
+    height: 600px;
+}
+
+.product-name {
+    font-family: "Gilroy";
+    text-decoration: none;
+    color: #f515bb;
+}
+
+.product-name-detail {
+    font-family: "Gilroy";
+    text-decoration: none;
+    color: dimgrey;
+}
+
+.product-name:hover {
+    text-decoration: none;
+    color: dimgrey;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.cart-lit {
+    text-decoration: none;
+    font-family: "Gilroy";
+    font-size: 18px;
+    color: white;
+}
+
+.cart-lit-prod {
+    text-decoration: none;
+    font-family: "Gilroy";
+    font-size: 18px;
+    color: dimgrey;
+}
+
+.cart-lit-prod:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.contacts {
+    font-family: "Gilroy";
+    text-decoration: none;
+    color: dimgrey;
+}
+
+.contacts:hover {
+    color: #f515bb;
+}
