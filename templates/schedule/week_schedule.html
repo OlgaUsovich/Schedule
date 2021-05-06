@@ -3,6 +3,11 @@
 {% block title %}Расписание на неделю{% endblock %}
 
 {% block content %}
+    <form>
+        {{ form }}
+    <button>Выбрать</button>
+    </form>
+
     <table class="table table-bordered">
         {#    <caption>#}
         {#        Расписание на неделю {{ days.0|date:"d.m" }} - {{ days.-1|date:"d.m" }}#}
