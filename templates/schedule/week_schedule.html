@@ -20,6 +20,12 @@
         </tr>
         </thead>
         <tbody>
+        <tr>
+            <td></td>
+            {% for date in dates_of_week %}
+                <td>{{ date|date:"d.m" }}</td>
+            {% endfor %}
+        </tr>
         {% for time, schedule_lines_dict in time_dict.items %}
             <tr>
                 <td>{{ time }}</td>
@@ -27,7 +33,8 @@
                     {% if schedule_lines.exists %}
                         <td>
                             {% for schedule_line in schedule_lines %}
-                                {{ schedule_line.short_name }}<br>
+                                <a href="{% url 'schedule:event_detail' schedule_line.id %}">{{ schedule_line.short_name }}</a>
+                                <br>
                             {% endfor %}
                         </td>
 

@@ -28,38 +28,15 @@
                           d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                 </svg>
                 {{ user }}</a>
-            <a class="btn btn-dark"
+            <a class="btn btn-light"
                href="#">Выход</a>
         {% else %}
-            <a class="btn btn-dark"
+            <a class="btn btn-light"
                href="#">Вход</a>
             <a class="btn btn-light" href="#">Регистрация</a>
         {% endif %}
     </div>
 </header>
-<nav class="navbar" style="background-color: lightgrey;">
-    <div class="container-fluid">
-        <div class="navbar-toggler">
-            <span class="product-name-detail">Наши контакты:</span>
-            <span class="product-name-detail"><a class="contacts" href="tel:+375297777777"><img
-                    style="height: 30px; width: 30px;"
-                    src="{% static 'icons/A1.png' %}">
-                +375 29 777 77 77</a>, <a class="contacts"
-                                          href="tel:+375337777777"><img style="height: 30px; width: 30px;"
-                                                                        src="{% static 'icons/mts.png' %}"> +375 33 777 77 77</a>, <a
-                    class="contacts"
-                    href="tg://resolve?domain=volha_me">
-                <img style="height: 30px; width: 30px;" src="{% static 'icons/telegram.svg' %}"> +375 33 777 77 77</a>
-            </span>
-        </div>
-        <form class="d-flex" action="#">
-            <input class="form-control me-2" type="search" placeholder="Найти..." aria-label="Поиск" name="q"
-                   value="#">
-            <button class="btn btn-outline-secondary" type="submit">Найти
-            </button>
-        </form>
-    </div>
-</nav>
 <div class="container-fluid">
     {% block nav %}
     {% endblock %}
