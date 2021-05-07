@@ -34,7 +34,15 @@
             <td>Курс</td>
             <td>{{ info.group.course }}</td>
         </tr>
-
+        {% if info.note %}
+            <tr>
+                <td>Примечание</td>
+                <td>{{ info.note }}</td>
+            </tr>
+        {% endif %}
         </tbody>
     </table>
+    <a class="btn btn-secondary" href=" {% url 'schedule:edit_schedule' pk=pk %}">Редактировать</a>
+    <a class="btn btn-dark" href=" {% url 'schedule:week_schedule' %}">Назад</a>
+
 {% endblock %}

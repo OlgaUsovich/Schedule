@@ -1,10 +1,11 @@
 import calendar
 import datetime
 
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
-from .forms import TeacherFilter
+from .forms import TeacherFilter, ScheduleEdit
 from .models import Schedule, EventTime
 
 
@@ -40,3 +41,16 @@ def week_schedule(request):
 def show_detail(request, pk):
     info = get_object_or_404(Schedule, id=pk)
     return render(request, 'schedule/schedule_detail.html', locals())
+
+
+@login_required
+def edit_schedule(request, pk):
+    schedule_info = get_object_or_404(Schedule, id=pk)
+    if request.method == "POST":
+        form = ScheduleEdit(request.POST, instance=schedule_info)
+        if form.is_valid():
+            schedule_info = form.save()
+            return redirect('schedule:event_detail', pk=pk)
+    else:
+        form = ScheduleEdit(instance=schedule_info)
+    return render(request, 'schedule/edit_schedule.html', locals())
