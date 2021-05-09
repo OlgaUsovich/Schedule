@@ -1,12 +1,18 @@
 {% extends "base.html" %}
+{% load bootstrap4 %}
 
 {% block title %}Расписание на неделю{% endblock %}
 
 {% block content %}
+<div class="container">
+<div align="center">
+<br>
     <form>
         {{ form }}
-        <button>Выбрать</button>
+        <button class="btn btn-light">Выбрать</button>
     </form>
+<br>
+    </div>
 
     <table class="table table-bordered">
         {#    <caption>#}
@@ -52,4 +58,5 @@
         </tbody>
     </table>
     <a class="btn btn-dark" href=" {% url 'schedule:calendar' %}">Назад</a>
+</div>
 {% endblock %}

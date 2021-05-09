@@ -3,14 +3,13 @@
 {% block title %}Календарь{% endblock %}
 
 {% block content %}
-    <p>Календарь на текущий месяц</p>
+    <h3 align="center">Календарь на текущий месяц</h3>
+<div class="container">
+
     <table class="table table-bordered">
-        <caption>
-            Календарь расписания
-        </caption>
         <thead>
         <tr>
-            <th># недели</th>
+            <th>№ недели</th>
             <th>Понедельник</th>
             <th>Вторник</th>
             <th>Среда</th>
@@ -44,4 +43,8 @@
         {% endfor %}
         </tbody>
     </table>
+{% if request.user.is_staff %}
+<a class="btn btn-dark" href=" {% url 'schedule:schedule_add' %}">Добавить запись</a>
+        </div>
+{% endif %}
 {% endblock %}

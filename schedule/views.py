@@ -61,3 +61,20 @@ def show_events_ofday(request, date):
     schedule_info = Schedule.objects.filter(event_date=date)
     return render(request, 'schedule/day_list.html', locals())
 
+
+@login_required
+def add_schedule_line(request):
+    if request.method == 'POST':
+        form = ScheduleEdit(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            Schedule.objects.create(group=cleaned_data['group'],
+                                    event=cleaned_data['event'],
+                                    event_time=cleaned_data['event_time'],
+                                    event_date=cleaned_data['event_date'],
+                                    teacher=cleaned_data['teacher'],
+                                    room=cleaned_data['room'],
+                                    note=cleaned_data['note'])
+            return redirect('http://127.0.0.1:8000/calendar/')
+    form = ScheduleEdit()
+    return render(request, 'schedule/add_line.html', locals())
