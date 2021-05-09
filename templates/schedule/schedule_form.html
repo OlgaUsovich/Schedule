@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+{% for i in schedule_lines %}
+{{ i }} <br>
+{% endfor %}
+{% endblock %}

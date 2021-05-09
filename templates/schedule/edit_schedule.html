@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Редактирование{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-dark">Сохранить</button>
+        <a class="btn btn-secondary" href=" {% url 'schedule:event_detail' pk=pk %}">Назад</a>
+
+    </form>
+{% endblock %}

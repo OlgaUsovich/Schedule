@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ info }}{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th colspan="2">{{ info.event }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Дата:</td>
+            <td>{{ info.event_date|date:"d.m.Y" }}</td>
+        </tr>
+        <tr>
+            <td>Время:</td>
+            <td>{{ info.event_time }}</td>
+        </tr>
+        <tr>
+            <td>Аудитория:</td>
+            <td>{{ info.room }}</td>
+        </tr>
+        <tr>
+            <td>Преподаватель:</td>
+            <td>{{ info.teacher }}</td>
+        </tr>
+        <tr>
+            <td>Группа:</td>
+            <td>{{ info.group }}</td>
+        </tr>
+        <tr>
+            <td>Курс</td>
+            <td>{{ info.group.course }}</td>
+        </tr>
+        {% if info.note %}
+            <tr>
+                <td>Примечание</td>
+                <td>{{ info.note }}</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <a class="btn btn-secondary" href=" {% url 'schedule:edit_schedule' pk=pk %}">Редактировать</a>
+    <a class="btn btn-dark" href=" {% url 'schedule:week_schedule' %}">Назад</a>
+
+{% endblock %}
