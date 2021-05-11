@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Занятия на {{ schedule_info.0.event_date }}{% endblock %}
+
+{% block content %}
+<h3>Занятия на {{ schedule_info.0.event_date }}</h3>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Название</th>
+        <th>Время</th>
+        <th>Аудитория</th>
+        <th>Преподаватель</th>
+        <th>Предмет</th>
+        <th>Примечание</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in schedule_info %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ i.event }}</td>
+        <td>{{ i.event_time }}</td>
+        <td>{{ i.room }}</td>
+        <td>{{ i.teacher }}</td>
+        <td>{{ i.group.course }}</td>
+        <td>{{ i.note }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+
+
+</table>
+<a class="btn btn-dark" href=" {% url 'schedule:calendar' %}">Назад</a>
+{% endblock %}
