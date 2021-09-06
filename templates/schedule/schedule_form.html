@@ -1,9 +1,99 @@
-{% extends "base.html" %}
+{% extends "schedule/../base.html" %}
+{% load bootstrap4 %}
 
-{% block title %}Расписание{% endblock %}
+{% block title %}Все расписание{% endblock %}
 
 {% block content %}
-{% for i in schedule_lines %}
-{{ i }} <br>
-{% endfor %}
+
+  <div class="container">
+    {% if request.user.is_staff %}
+      <div style="margin: 10px;">
+        <a class="btn btn-success" href=" {% url 'schedule:schedule_add' %}">Добавить запись</a>
+      </div>
+    {% endif %}
+    <form style="margin: 20px 0; text-align: center;">
+      {{ form }}
+      <button class="btn btn-light">Выбрать</button>
+    </form>
+
+    <div style="position: relative;">
+      <div style="overflow-x: auto; margin-left: 150px">
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th rowspan="" style="position: absolute; border: 0; left: -150px; margin-top: -1px; min-width: 150px; ">
+              Аудитория
+            </th>
+            <th style="position: absolute; border: 0; left: 0; margin-top: -1px; min-width: 150px; ">Время
+              занятий
+            </th>
+            {% for date in dates %}
+              <th>{{ date|date:"l" }}</th>
+            {% endfor %}
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td style="position: absolute; border: 0; left: 0; margin-top: -1px; min-width: 150px; ">&nbsp;
+            </td>
+            {% for date in dates %}
+              <td>{{ date|date:"d.m" }}</td>
+            {% endfor %}
+          </tr>
+          {% for room, schedule_time_dict in time_dict.items %}
+
+            {% for time, schedule_lines_dict in schedule_time_dict.items %}
+              <tr>
+                {% ifchanged %}
+                  <td style="position: absolute; border: 0; border-top: inherit; left: -150px; margin-top: -1px; min-width: 150px; ">{{ room }}</td>
+                {% endifchanged %}
+                <td style="position: absolute; border: 0; {% if forloop.first %} border-top: inherit;{% endif %}  left: 0; margin-top: -1px; min-width: 150px; ">{{ time }}</td>
+                {% for date, schedule_lines in schedule_lines_dict.items %}
+                  {% if schedule_lines.exists %}
+                    <td>
+                      <ul>
+                        {% for schedule_line in schedule_lines %}
+
+                          <li>
+                            <a href="{% url 'schedule:event_detail' schedule_line.id %}">{{ schedule_line.short_name }}</a>
+                          </li>
+                          {% if request.user.is_staff %}
+                            <a class="text-dark"
+                               href="{% url 'schedule:schedule_add' %}?date={{ date|date:'Y-m-d' }}&time={{ time.id }}&room={{ room.id }}">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
+                                   class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                              </svg>
+                              Добавить событие
+                            </a>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </td>
+
+                  {% else %}
+                    {% if user.is_staff %}
+                      <td><a class="text-dark"
+                             href="{% url 'schedule:schedule_add' %}?date={{ date|date:'Y-m-d' }}&time={{ time.id }}&room={{ room.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
+                             class="bi bi-plus-lg" viewBox="0 0 16 16">
+                          <path
+                              d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                      </a></td>
+                    {% else %}
+                      <td>---</td>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 {% endblock %}

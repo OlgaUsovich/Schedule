@@ -15,12 +15,12 @@
 <body class="back">
 <header class="header">
     <a href="/" class="logo">
-        ITEC CRM
+        Scedule app
     </a>
     <div class="header__buttons">
         {% if user.is_authenticated %}
             <a class="btn btn-light"
-               href="#">
+               href="{%  url 'users:profile' %}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      class="bi bi-person-circle" viewBox="0 0 16 16">
                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
@@ -29,21 +29,26 @@
                 </svg>
                 {{ user }}</a>
             <a class="btn btn-light"
-               href="#">Выход</a>
+               href="{% url 'users:logout' %}">Выход</a>
         {% else %}
             <a class="btn btn-light"
-               href="#">Вход</a>
-            <a class="btn btn-light" href="#">Регистрация</a>
+               href="{% url 'users:login' %}">Вход</a>
+            <a class="btn btn-light" href="{% url 'users:registration' %}">Регистрация</a>
         {% endif %}
     </div>
 </header>
-<div class="container-fluid">
-    {% block nav %}
-    {% endblock %}
 
-    {% block content %}
-
-    {% endblock %}
+<div class="btn-group" role="group" aria-label="Schedule_nav">
+    <a class="btn {% if request.get_raw_uri == 'http://127.0.0.1:8000/schedule/' %} btn-secondary{% else %}btn-light{% endif %}"
+       href="{% url 'schedule:schedule' %}">Все расписание</a>
+    <a class="btn {% if request.get_raw_uri == 'http://127.0.0.1:8000/schedule/calendar/' %} btn-secondary{% else %}btn-light{% endif %}"
+       href="{% url 'schedule:calendar' %}">Календарь на месяц</a>
+    <a class="btn {% if request.get_raw_uri == 'http://127.0.0.1:8000/schedule/week/' %} btn-secondary{% else %}btn-light{% endif %}"
+       href="{% url 'schedule:week_schedule' %}">Расписание на неделю</a>
 </div>
+
+{% block content %}
+
+{% endblock %}
 </body>
 </html>

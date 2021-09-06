@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}Редактировать{% endblock %}
+{% block content %}
+    {% include 'authentication/_profile_nav.html' with active='info' %}
+    <div class="row">
+        <div class="col-sm-6 col-lg-4">
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ error }}
+                {% bootstrap_form form %}
+{#                <p><input id="messages" type="checkbox"> <label for="messages">Подписаться на нашу рассылку</label></p>#}
+{#                <p>#}
+                    <button class="btn btn-dark">Сохранить изменения</button>
+                    <a class="btn btn-secondary" href=" {% url 'authentication:profile'%}">Назад</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

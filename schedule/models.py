@@ -25,7 +25,7 @@ class EventTime(models.Model):
         verbose_name_plural = 'Временные интервалы событий'
 
     def __str__(self):
-        return f'{self.start} - {self.end}'
+        return f'{self.start.strftime("%H:%M")} - {self.end.strftime("%H:%M")}'
 
 
 class Teachers(models.Model):
@@ -48,10 +48,10 @@ class Groups(models.Model):
     gr_num = models.CharField(max_length=255, verbose_name='Номер группы')
     course = models.ForeignKey('Courses', on_delete=models.CASCADE)
     teacher = models.ForeignKey(Teachers, on_delete=models.DO_NOTHING, blank=True, null=True)
-    start_date = models.DateField(verbose_name='Дата начала группы', blank=True, null=True)
-    end_date = models.DateField(verbose_name='Дата окончания группы', blank=True, null=True)
-    group_status = models.CharField(max_length=10, verbose_name='Статус группы')
-    person_cost = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Стоимость обучения 1 человека')
+    start_date = models.DateField(verbose_name='Дата начала группы')
+    end_date = models.DateField(verbose_name='Дата окончания группы')
+    group_status = models.CharField(max_length=10, verbose_name='Статус группы', blank=True, null=True)
+    person_cost = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Стоимость обучения 1 человека', blank=True, null=True)
     note = models.TextField(verbose_name='Примечание', blank=True, null=True)
 
     class Meta:
@@ -105,9 +105,12 @@ class Schedule(models.Model):
     class Meta:
         verbose_name = 'Событие в расписании'
         verbose_name_plural = 'Раписание'
+        unique_together = [['event_time', 'teacher', 'event_date'], ['event_time', 'room', 'event_date'],
+                           ['event_time', 'group', 'event_date']]
 
     def __str__(self):
-        return f'{self.group}, {self.event}, {self.event_time}, {self.event_date}'
+        return f'{self.group}, {self.event}, {self.event_time}, {self.event_date}, {self.room}'
 
     def short_name(self):
-        return f'{self.event}, {self.group}, {self.teacher}'
+        return f'{self.event}, {self.group}, {self.teacher}, ауд. {self.room}'
+

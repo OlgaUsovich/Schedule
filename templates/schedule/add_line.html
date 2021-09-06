@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "schedule/../base.html" %}
 {% load bootstrap4 %}
 
 {% block title %}Занятия на {{ schedule_info.0.event_date }}{% endblock %}
@@ -6,12 +6,13 @@
 {% block content %}
 <h2 class="row justify-content-around">Добавление записи расписания</h2><br>
 <div class="row justify-content-around">
+
         <div class="col-sm-6 col-lg-5">
-<form action="." method="POST">
+<form action="" method="POST">
     {% csrf_token %}
     {% bootstrap_form form %}
     <button class="btn btn-success">Добавить</button>
-    <a class="btn btn-dark" href=" {% url 'schedule:calendar' %}">Назад</a>
+    <a class="btn btn-dark" href="{% url 'schedule:schedule' %}">Назад</a>
 <!--    <button class="btn btn-warning" onclick="redirect()">Сохранить и добавить еще</button>-->
 </form>
 

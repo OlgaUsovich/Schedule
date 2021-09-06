@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}Вход{% endblock %}
+{% block content %}
+    <div class="container ">
+
+        <div class="row justify-content-around">
+            <div class="col-sm-6 col-lg-5">
+                <h3>Добро пожаловать!</h3>
+                <br>
+                <h5>Представьтесь, пожалуйста:</h5>
+                <br>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ error }}
+                    {% bootstrap_form form %}
+                    <button class="btn btn-dark">Войти</button>
+                    <input type="hidden" name="next" value="{% url 'users:profile' %}">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

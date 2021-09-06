@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+{#    {% include 'users/_profile_nav.html' with active='info' %}#}
+    <div class="container">
+        <div style="padding-top: 10px; padding-bottom: 10px;">
+            <a class="btn btn-dark" href=" {% url 'users:edit_profile' id=user.id %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil"
+                     viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+                Редактировать профиль</a>
+            <a class="btn btn-dark" href="{% url 'users:change_password' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-eraser-fill"
+                     viewBox="0 0 16 16">
+                    <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                </svg>
+                Сменить пароль</a>
+        </div>
+        <div class="col-sm-6">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <th scope="row">Логин:</th>
+                    <td>{{ user_info.username }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Имя:</th>
+                    <td>{{ user_info.first_name }} {{ user_info.last_name }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">E-mail:</th>
+                    <td>{{ user_info.email }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Телефон:</th>
+                    <td>{{ user_info.phone }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Адрес:</th>
+                    <td>{{ user_info.address }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        {#    <p>Логин: {{ user_info.username }}</p>#}
+        {#    <p>Имя: {{ user_info.first_name }}</p>#}
+        {#    <p>Фамилия: {{ user_info.last_name }}</p>#}
+        {#    <p>E-mail: {{ user_info.email }}</p>#}
+        {#    <p>Телефон: {{ user_info.phone }}</p>#}
+        {#    <p>Адрес: {{ user_info.address }}</p>#}
+        <a type="button" class="btn btn-secondary" href="/">Вернуться на главную</a>
+    </div>
+
+
+{% endblock %}

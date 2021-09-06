@@ -1,25 +1,22 @@
-{% extends "base.html" %}
+{% extends "schedule/../base.html" %}
 {% load bootstrap4 %}
 
 {% block title %}Расписание на неделю{% endblock %}
 
 {% block content %}
 <div class="container">
-<div align="center">
-<br>
-    <form>
+    <h1 style="margin: 20px 0; text-align: center; font-size: 1.5rem;">Расписание на неделю {{ dates_of_week.0 }} -
+        {{ dates_of_week.6 }}</h1>
+    <form style="margin: 20px 0; text-align: center;">
+        <input type="hidden" name="week" value="{{ week_num }}"/>
         {{ form }}
         <button class="btn btn-light">Выбрать</button>
     </form>
-<br>
-    </div>
 
     <table class="table table-bordered">
-        {#    <caption>#}
-        {#        Расписание на неделю {{ days.0|date:"d.m" }} - {{ days.-1|date:"d.m" }}#}
-        {#    </caption>#}
         <thead>
         <tr>
+            <th>Аудитория</th>
             <th>Время занятий</th>
             <th>Понедельник</th>
             <th>Вторник</th>
@@ -32,31 +29,67 @@
         </thead>
         <tbody>
         <tr>
-            <td></td>
+            <td colspan="2"></td>
             {% for date in dates_of_week %}
-                <td>{{ date|date:"d.m" }}</td>
+            <td>{{ date|date:"d.m" }}</td>
             {% endfor %}
         </tr>
-        {% for time, schedule_lines_dict in time_dict.items %}
-            <tr>
-                <td>{{ time }}</td>
-                {% for schedule_lines in schedule_lines_dict.values %}
-                    {% if schedule_lines.exists %}
-                        <td>
-                            {% for schedule_line in schedule_lines %}
-                                <a href="{% url 'schedule:event_detail' schedule_line.id %}">{{ schedule_line.short_name }}</a>
-                                <br>
-                            {% endfor %}
-                        </td>
+        {% for room, schedule_time_dict in time_dict.items %}
 
-                    {% else %}
-                        <td>----</td>
+        {% for time, schedule_lines_dict in schedule_time_dict.items %}
+        <tr>
+            <td>
+                {% ifchanged %}
+                {{ room }}
+                {% endifchanged %}
+            </td>
+            <td>
+                {{ time }}
+            </td>
+            {% for date, schedule_lines in schedule_lines_dict.items %}
+            {% if schedule_lines.exists %}
+            <td>
+                <ul>
+                    {% for schedule_line in schedule_lines %}
+
+                    <li>
+                        <a href="{% url 'schedule:event_detail' schedule_line.id %}">{{ schedule_line.short_name }}</a>
+                    </li>
+                    {% if request.user.is_staff %}
+                    <a class="text-dark"
+                       href="{% url 'schedule:schedule_add' %}?date={{ date|date:'Y-m-d' }}&time={{ time.id }}&room={{ room.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
+                             class="bi bi-plus-lg" viewBox="0 0 16 16">
+                            <path
+                                    d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                        </svg>
+                        Добавить событие
+                    </a>
                     {% endif %}
-                {% endfor %}
-            </tr>
+                    {% endfor %}
+                </ul>
+            </td>
+
+            {% else %}
+            {% if user.is_staff %}
+            <td><a class="text-dark"
+                   href="{% url 'schedule:schedule_add' %}?date={{ date|date:'Y-m-d' }}&time={{ time.id }}&room={{ room.id }}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" fill="currentColor"
+                     class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path
+                            d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+                </svg>
+            </a></td>
+            {% else %}
+            <td>---</td>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
         {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-dark" href=" {% url 'schedule:calendar' %}">Назад</a>
+    <a class="btn btn-dark" href=" {% url 'schedule:schedule' %}">Назад</a>
 </div>
 {% endblock %}
